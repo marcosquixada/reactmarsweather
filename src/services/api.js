@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://restcountries.eu/rest/v2/"
+    baseURL: "http://localhost:8080/api/sols/all"
 });
 
 export default api;

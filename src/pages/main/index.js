@@ -5,58 +5,58 @@ import './styles.css';
 
 export default class Main extends Component{
     state = {
-        products: [],
+        sols: [],
         page: 0,
         total: 0,
         startRec: 0,
         endRec: 25,
     }
     componentDidMount(){
-        this.loadProducts();
+        this.loadsols();
     }
 
-    loadProducts = async (page = 1) => {
+    loadsols = async (page = 1) => {
         const response = await api.get("/");
 
         const endRec = 25*page;
         const startRec = endRec - 25;
         const total = response.data.length;
 
-        this.setState({ products: response.data.slice(startRec, endRec), page: page, total: total});
+        this.setState({ sols: response.data.data.content.slice(startRec, endRec), page: page, total: total});
     } 
 
     prevPage = () => {
-        const { page, total, products } = this.state;
+        const { page, total, sols } = this.state;
         if(page === 1) return;
 
         const pageNumber = page - 1;
 
-        this.loadProducts(pageNumber);
+        this.loadsols(pageNumber);
     }
     nextPage = () => {
-        const { page, total, products } = this.state;
+        const { page, total, sols } = this.state;
         if(page === total/25) return;
 
         const pageNumber = page + 1;
 
-        this.loadProducts(pageNumber);
+        this.loadsols(pageNumber);
     }
 
     render(){
-        const { products, page, total } = this.state;
+        const { sols, page, total } = this.state;
 
         return (
             <div className="product-list">
-                {products.map(product => (
-                    <article key={product.numericCode}>
+                {sols.map(sol => (
+                    <article key={sol.id}>
                         <strong>
-                            {product.name}
+                            SOL: {sol.id}
                         </strong>
                         <p>
-                            {product.subregion}
+                            Avg Weather: {sol.av}
                         </p>
 
-                        <a href="">Access</a>
+                        <a href="">Details</a>
                     </article>
                 ))}
                 <div className="actions">
